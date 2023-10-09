@@ -16,14 +16,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "username")
-    @NotBlank
+    @Column(name = "username", nullable = false, unique = true)
+    @NotBlank(message = "Поле username не может быть пустым")
+    @Size(min = 3, max = 50, message = "Поле должно содержать от 3 до 50 символов")
     private String username;
-    @Column(name = "password")
-    @NotBlank
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email")
-    @NotBlank
+    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank(message = "Поле email не может быть пустым")
     private String email;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
@@ -31,8 +31,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleList = new HashSet<>();
 
-    public User() {
-    }
+    public User() {   }
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -125,11 +124,13 @@ public class User implements UserDetails {
                 '}';
     }
 
-    public String roleToString() {
+    public String roleToString(){
         StringBuilder sb = new StringBuilder();
-        for (Role role : roleList) {
+        for(Role role: roleList){
             sb.append(role.getNameRole()).append(" ");
         }
         return sb.toString();
     }
 }
+
+

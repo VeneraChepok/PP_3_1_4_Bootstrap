@@ -15,7 +15,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column (name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "roleList", cascade = CascadeType.ALL)
@@ -84,7 +84,7 @@ public class Role implements GrantedAuthority {
         return getName();
     }
 
-    public String getNameRole() {
+    public String getNameRole(){
         return name.substring("ROLE_".length());
     }
 

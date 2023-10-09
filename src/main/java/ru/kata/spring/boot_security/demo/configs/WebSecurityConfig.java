@@ -15,6 +15,7 @@ import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
+
     private final UserDetailsServiceImpl userDetailsService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsServiceImpl userDetailsService) {
@@ -26,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests() //для ограничения доступа к определенному URL-адресу для аутентифицированных пользователей:
+                .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
