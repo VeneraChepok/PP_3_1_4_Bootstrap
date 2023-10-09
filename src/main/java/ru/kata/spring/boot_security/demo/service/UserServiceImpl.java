@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void update(User user, Long id) {
-        User userFromDb = userRepository.findById(id).get();
+    public void update(User user) {
+        User userFromDb = userRepository.findById(user.getId()).get();
         if (userFromDb.getPassword().equals(user.getPassword())) {
             userRepository.save(user);
         } else {
